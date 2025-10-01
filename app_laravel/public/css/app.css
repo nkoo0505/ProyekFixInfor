@@ -1,0 +1,230 @@
+/* resources/css/style.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #1a1a1a;
+  background-color: #ffffff;
+}
+
+/* ====== Navbar ====== */
+nav {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+nav ul li a {
+  text-decoration: none;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+nav ul li a:hover {
+  color: #007bff;
+}
+nav .auth-links a {
+  text-decoration: none;
+  margin-left: 1rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 5px;
+}
+nav .auth-links a:first-child {
+  color: #007bff;
+  border: 1px solid #007bff;
+}
+nav .auth-links a:last-child {
+  background-color: #007bff;
+  color: white;
+}
+
+/* ====== Hero Section ====== */
+.hero {
+  background: linear-gradient(to right, #002B5B, #00509D);
+  color: white;
+  padding: 5rem 2rem;
+  text-align: center;
+}
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+.hero .btn {
+  background-color: #ffffff;
+  color: #00509D;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+}
+.hero .btn:hover {
+  background-color: #f0f0f0;
+}
+
+/* ====== Section ====== */
+.section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+.section-title {
+  font-size: 2rem;
+  color: #1a1a1a;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* ====== Cards ====== */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+.card {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  transition: transform 0.3s;
+}
+.card:hover {
+  transform: translateY(-5px);
+}
+.card h3 {
+  color: #00509D;
+  margin-bottom: 1rem;
+}
+
+.card img.logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+.card {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+
+/* ====== Footer ====== */
+footer {
+  background-color: #1a1a1a;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+  margin-top: 3rem;
+}
+
+/* ====== Stats Section ====== */
+.stats {
+  display: flex;
+  justify-content: space-around;
+  background-color: #00509D;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+.stats .stat {
+  flex: 1;
+}
+.stats .stat h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.login-button {
+    padding: 6px 12px;
+    background-color: #1d4ed8; /* biru */
+    color: white;
+    border-radius: 4px;
+    transition: background 0.3s;
+    font-weight: bold;
+}
+
+.login-button:hover {
+    background-color: #2563eb; /* biru hover */
+}
+
+/* ====== Dropdown Menu ====== */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-toggle {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+}
+
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  min-width: 160px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+}
+
+.nav-dropdown-menu a {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+.nav-dropdown-menu a:hover {
+  background-color: #f5f5f5;
+  color: #007bff;
+}
+
+/* Show dropdown on hover
+.nav-dropdown:hover .nav-dropdown-menu {
+  display: block;
+} */
+
+.nav-dropdown-menu.show {
+  display: block;
+}
