@@ -168,3 +168,81 @@ footer {
     margin-top: 3rem;
     font-size: 0.9rem;
 }
+
+/* Style untuk kontainer utama */
+.kegiatan-container {
+    background-color: #003366; /* Warna biru navy gelap */
+    padding: 40px 20px;
+    border-radius: 25px;
+    color: white;
+}
+
+/* Style untuk setiap kartu kegiatan */
+.kegiatan-card {
+    background-color: white;
+    color: #333;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Membuat setiap kartu memiliki tinggi yang sama */
+}
+
+.kegiatan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Style untuk gambar poster */
+.kegiatan-card img {
+    width: 100%;
+    height: 200px; /* Tinggi gambar dibuat seragam */
+    object-fit: cover; /* Memastikan gambar terisi penuh tanpa distorsi */
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+/* Style untuk judul kegiatan */
+.kegiatan-card h3 {
+    font-weight: 700;
+    color: #003366;
+    margin-bottom: 10px;
+}
+
+/* Style untuk deskripsi */
+.kegiatan-card p {
+    font-size: 0.9rem;
+    flex-grow: 1; /* Membuat paragraf mengisi ruang yang tersisa */
+    margin-bottom: 20px;
+}
+
+/* Style untuk tombol "Selengkapnya" */
+.btn-selengkapnya {
+    background: linear-gradient(90deg, #00B4DB, #0083B0);
+    border: none;
+    color: white;
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    align-self: center; /* Posisi tombol di tengah */
+    margin-top: auto; /* Mendorong tombol ke bawah */
+}
+
+.btn-selengkapnya:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Style untuk tombol aksi admin */
+.admin-actions {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    text-align: center;
+}

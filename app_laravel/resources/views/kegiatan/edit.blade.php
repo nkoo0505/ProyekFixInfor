@@ -24,12 +24,12 @@
     
     <div class="row">
         <div class="col">
-            <form action="{{ route('kegiatan.update', $kegiatan->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('kegiatan.update', $kegiatan->kegiatan_id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="mt-2">    
                     <label>Nama Kegiatan:</label>
-                    <input required type="text" name="nama_kegiatan" value="{{ $kegiatan->nama_kegiatan }}" class="form-control" placeholder="Masukkan nama kegiatan">
+                    <input required type="text" name="nama_kegiatan" value="{{ $kegiatan->judul }}" class="form-control" placeholder="Masukkan nama kegiatan">
                 </div>
 
                 <div class="mt-3">
@@ -50,7 +50,7 @@
 
                 <div class="mt-3">    
                     <label>Tautan Pendaftaran:</label>
-                    <input required type="url" name="link_daftar" placeholder="Masukkan tautan pendaftaran kegiatan" class="form-control" value="{{ $kegiatan->link_daftar }}">
+                    <input required type="url" name="link_daftar" placeholder="Masukkan tautan pendaftaran kegiatan" class="form-control" value="{{ $kegiatan->linkPendaftaran_url }}">
                 </div>
 
                 <div class="mt-3">

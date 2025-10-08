@@ -22,6 +22,16 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // ** 
 Route::get('/profil/{ormawa_id}', [ProfilController::class, 'show'])->name('profil.show');
 
+
+//route sementara untuk memeriksa koneksi
+use Illuminate\Support\Facades\DB;
+
+Route::get('/cek-db', function () {
+    return DB::connection()->getDatabaseName();
+});
+
+
+
 // Kegiatan, Pertanyaan, Galeri - Bebas akses (index dan show saja)
 Route::get('/kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
 Route::get('/kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
