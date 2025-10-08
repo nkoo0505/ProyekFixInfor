@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'ormawa',
     ],
 
     /*
@@ -38,13 +38,13 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'ormawa',
         ],
 
 
         'user' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'ormawa',
         ],
     ],
 
@@ -67,9 +67,9 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'ormawa' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Ormawa::class,
         ],
     ],
 
@@ -89,14 +89,20 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'ormawa' => [
+            'provider' => 'ormawa',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],
     ],
 
+//     'providers' => [
+//     'users' => [
+//         'driver' => 'eloquent',
+//         'model' => App\Models\Ormawa::class,
+//     ],
+// ],
     /*
     |--------------------------------------------------------------------------
     | Password Confirmation Timeout

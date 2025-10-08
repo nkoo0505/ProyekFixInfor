@@ -11,13 +11,13 @@
             <h1>Tambah Kegiatan Baru</h1>
             
             @if ($errors->any())
-            <div>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             @endif
         </div>
     </div>
@@ -26,16 +26,17 @@
         <div class="col">
             <form action="{{ route('kegiatan.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+
                 <div class="mt-2">    
                     <label>Nama Kegiatan:</label>
-                    <input required type="text" name="nama_kegiatan" value="{{ old('nama_kegiatan') }}" class="form-control" placeholder="Masukkan nama kegiatan">
+                    <input required type="text" name="judul" value="{{ old('judul') }}" class="form-control" placeholder="Masukkan nama kegiatan">
                 </div>
 
                 <div class="mt-3">
                     <label>Deskripsi:</label>
-                    <textarea class="form-control" placeholder="Deskripsikan kegiatan" name="deskripsi">{{ old('deskripsi') }}</textarea>
-                
+                    <textarea class="form-control" name="deskripsi" placeholder="Deskripsikan kegiatan">{{ old('deskripsi') }}</textarea>
                 </div>
+
                 
                 <div class="mt-3">    
                     <label>Tanggal Mulai:</label>
@@ -49,12 +50,12 @@
 
                 <div class="mt-3">    
                     <label>Tautan Pendaftaran:</label>
-                    <input required type="url" name="link_daftar" placeholder="Masukkan tautan pendaftaran kegiatan" class="form-control" value="{{ old('link_daftar') }}">
+                    <input type="url" name="link_pendaftaran" placeholder="Masukkan tautan pendaftaran kegiatan" class="form-control" value="{{ old('linkPendaftaran_url') }}">
                 </div>
 
                 <div class="mt-3">
                     <label>Poster Kegiatan:</label>
-                    <input type="file" accept="images/*" class="form-control" name="poster">
+                    <input type="file" accept="image/*" class="form-control" name="gambar_url">
                     <span class="text-secondary">Gambar kegiatan tidak wajib diisi</span>
                 </div>
                 
