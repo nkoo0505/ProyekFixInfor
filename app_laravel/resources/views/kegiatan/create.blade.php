@@ -50,7 +50,7 @@
 
                 <div class="mt-3">    
                     <label>Tautan Pendaftaran:</label>
-                    <input type="url" name="link_pendaftaran" placeholder="Masukkan tautan pendaftaran kegiatan" class="form-control" value="{{ old('linkPendaftaran_url') }}">
+                    <input type="url" name="linkPendaftaran_url" placeholder="Masukkan tautan pendaftaran kegiatan" class="form-control" value="{{ old('linkPendaftaran_url') }}">
                 </div>
 
                 <div class="mt-3">

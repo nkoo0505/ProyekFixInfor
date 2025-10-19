@@ -13,11 +13,11 @@ class Kegiatan extends Model
     public $timestamps = false;
     protected $fillable = [
         'ormawa_id',
-        'nama_kegiatan',
+        'judul',
         'deskripsi',
         'tanggal_mulai',
         'tanggal_selesai',
-        'link_daftar',
+        'linkPendaftaran_url',
         'poster',
     ];
 

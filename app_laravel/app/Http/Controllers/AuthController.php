@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+
 
 class AuthController extends Controller
 {
@@ -18,8 +20,10 @@ class AuthController extends Controller
     {
         $credentials = $request->validate([
             'username' => 'required',
-            'password' => 'required',
+            'password_has' => 'required',
         ]);
+
+        
 
         if (Auth::attempt($credentials)) {
             return redirect()->route('beranda');

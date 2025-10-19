@@ -78,7 +78,7 @@
                                     <hr>
                                     <p><strong>Deskripsi:</strong><br>{!! nl2br(e($kegiatan->deskripsi)) !!}</p>
                                     <hr>
-                                    <a href="{{ $kegiatan->link_pendaftaran }}" class="btn btn-info" target="_blank" rel="noopener noreferrer">Link Pendaftaran</a>
+                                    <a href="{{ $kegiatan->linkPendaftaran_url }}" class="btn btn-info" >Link Pendaftaran</a>
                                 </div>
                             </div>
                         </div>

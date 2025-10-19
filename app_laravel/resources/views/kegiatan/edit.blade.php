@@ -29,7 +29,7 @@
                 @method('PUT')
                 <div class="mt-2">    
                     <label>Nama Kegiatan:</label>
-                    <input required type="text" name="nama_kegiatan" value="{{ $kegiatan->judul }}" class="form-control" placeholder="Masukkan nama kegiatan">
+                    <input required type="text" name="judul" value="{{ $kegiatan->judul }}" class="form-control" placeholder="Masukkan nama kegiatan">
                 </div>
 
                 <div class="mt-3">
@@ -50,13 +50,13 @@
 
                 <div class="mt-3">    
                     <label>Tautan Pendaftaran:</label>
-                    <input required type="url" name="link_daftar" placeholder="Masukkan tautan pendaftaran kegiatan" class="form-control" value="{{ $kegiatan->linkPendaftaran_url }}">
+                    <input required type="url" name="linkPendaftaran_url" placeholder="Masukkan tautan pendaftaran kegiatan" class="form-control" value="{{ $kegiatan->linkPendaftaran_url }}">
                 </div>
 
                 <div class="mt-3">
                     <label>Poster Kegiatan:</label>
-                    <input type="file" accept="images/*" class="form-control" name="poster">
-                    <a href="{{ asset('images/kegiatan/'.$kegiatan->poster) }}">Lihat Poster</a>
+                    <input type="file" accept="images/*" class="form-control" name="gambar_url">
+                    <a href="{{ asset('images/kegiatan/'.$kegiatan->gambar_url) }}">Lihat Poster</a>
                     <br>
                     <span class="text-secondary">Gambar kegiatan tidak wajib diisi</span>
                 </div>

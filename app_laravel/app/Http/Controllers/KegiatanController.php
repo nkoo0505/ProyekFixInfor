@@ -38,7 +38,7 @@ class KegiatanController extends Controller
             'deskripsi' => 'required|string',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-            'gambar_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk file gambar
+            'gambar_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120', // Validasi untuk file gambar
             'linkPendaftaran_url' => 'nullable|url',
         ]);
 
@@ -101,7 +101,7 @@ class KegiatanController extends Controller
             'deskripsi' => 'required|string',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-            'gambar_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'linkPendaftran_url' => 'nullable|url',
         ]);
 
