@@ -18,15 +18,17 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+         
         $credentials = $request->validate([
             'username' => 'required',
-            'password_has' => 'required',
+            'password' => 'required',
         ]);
+      
 
         
 
         if (Auth::attempt($credentials)) {
-            return redirect()->route('beranda');
+            return redirect()->route('beranda')->with('sukses','Berhasil login!');
         }
 
         return back()->with('error', 'Username atau Password salah');
@@ -35,6 +37,6 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login');
+        return redirect()->route('login')->with('suskses','Anda berhasil logout');
     }
 }

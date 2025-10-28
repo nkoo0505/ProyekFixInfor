@@ -10,14 +10,16 @@
         <div class="mt-3">
             <h1>Tambah Kegiatan Baru</h1>
             
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
+             @if ($errors->any())
+            <script>
+                @foreach ($errors->all() as $error)
+                     Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi Kesalahan!',
+                        text: "{{ $error }}",
+                    });
+                @endforeach
+            </script>
             @endif
         </div>
     </div>

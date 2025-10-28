@@ -28,16 +28,13 @@
 
 /* Style untuk setiap kartu kegiatan */
 .kegiatan-card {
-    background-color: white;
-    color: #333;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    height: 100%; /* Penting agar kartu mengisi seluruh ruang grid */
+    margin: 10px; /* memberi jarak antar card */
+    padding: 15px; /* memberi ruang di dalam card */
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+
 
 .kegiatan-card:hover {
     transform: translateY(-5px);

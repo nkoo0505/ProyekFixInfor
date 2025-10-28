@@ -22,10 +22,10 @@ class ProfilController extends Controller
         $ormawaList = [
             'bem' => [
                 'nama' => 'BEM Fakultas Sains & Teknologi',
-                'logo' => '/images/bemf/logo.png',
-                'visi' => 'ayoo diedit.........  Menjadi pelopor mahasiswa berintegritas.',
+                'logo' => '\public\images\logoKabinet.jpg',
+                'visi' => 'Menjadi pelopor mahasiswa berintegritas.',
                 'misi' => [
-                    'ayoo diedit......... Meningkatkan kualitas mahasiswa',
+                    'Meningkatkan kualitas mahasiswa',
                     'Membina hubungan baik antar himpunan',
                     'Mewadahi kegiatan sosial dan akademik',
                 ],
@@ -37,9 +37,9 @@ class ProfilController extends Controller
             'hmif' => [
                 'nama' => 'Himpunan Mahasiswa Informatika',
                 'logo' => '/images/bemf/logo.png',
-                'visi' => 'ayoo diedit.........  Menjadi pelopor mahasiswa berintegritas.',
+                'visi' => 'Menjadi pelopor mahasiswa berintegritas.',
                 'misi' => [
-                    'ayoo diedit.........  Meningkatkan kualitas mahasiswa',
+                    'Meningkatkan kualitas mahasiswa',
                     'Membina hubungan baik antar himpunan',
                     'Mewadahi kegiatan sosial dan akademik',
                 ],
@@ -51,9 +51,9 @@ class ProfilController extends Controller
              'hmte' => [
                 'nama' => 'Himpunan Mahasiswa Teknik Elektro',
                 'logo' => '/images/bemf/logo.png',
-                'visi' => 'ayoo diedit.........  Menjadi pelopor mahasiswa berintegritas.',
+                'visi' => 'Menjadi pelopor mahasiswa berintegritas.',
                 'misi' => [
-                    'ayoo diedit.........  Meningkatkan kualitas mahasiswa',
+                    'Meningkatkan kualitas mahasiswa',
                     'Membina hubungan baik antar himpunan',
                     'Mewadahi kegiatan sosial dan akademik',
                 ],
@@ -64,9 +64,9 @@ class ProfilController extends Controller
              'hmm' => [
                 'nama' => 'Himpunan Mahasiswa Matematika',
                 'logo' => '/images/bemf/logo.png',
-                'visi' => 'ayoo diedit.........  Menjadi pelopor mahasiswa berintegritas.',
+                'visi' => 'Menjadi pelopor mahasiswa berintegritas.',
                 'misi' => [
-                    'ayoo diedit.........  Meningkatkan kualitas mahasiswa',
+                    'Meningkatkan kualitas mahasiswa',
                     'Membina hubungan baik antar himpunan',
                     'Mewadahi kegiatan sosial dan akademik',
                 ],
@@ -78,9 +78,9 @@ class ProfilController extends Controller
              'kmtm' => [
                 'nama' => 'Keluarga Mahasiswa Teknik Mesin',
                 'logo' => '/images/bemf/logo.png',
-                'visi' => 'ayoo diedit.........  Menjadi pelopor mahasiswa berintegritas.',
+                'visi' => 'Menjadi pelopor mahasiswa berintegritas.',
                 'misi' => [
-                    'ayoo diedit.........  Meningkatkan kualitas mahasiswa',
+                    'Meningkatkan kualitas mahasiswa',
                     'Membina hubungan baik antar himpunan',
                     'Mewadahi kegiatan sosial dan akademik',
                 ],

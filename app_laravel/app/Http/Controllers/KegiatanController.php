@@ -40,6 +40,10 @@ class KegiatanController extends Controller
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
             'gambar_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120', // Validasi untuk file gambar
             'linkPendaftaran_url' => 'nullable|url',
+        ],[ 
+            'judul.required' => 'Nama kegiatan wajib diisi',
+            'deskripsi.required' => 'Deskripsi kegiatan wajib diisi.',
+            'tanggal_selesai.after_or_equal' => 'Tanggal selesai harus sama atau setelah tanggal mulai.',
         ]);
 
         $kegiatan = new Kegiatan();
@@ -56,7 +60,7 @@ class KegiatanController extends Controller
         // Logika untuk upload gambar
         if ($request->hasFile('gambar_url')) {
             $file = $request->file('gambar_url');
-            $filename = time() . '-' . $file->getClientOriginalName();
+            $filename = time() . '-' . $file->getClientOriginalName();// digunakan untuk membuat nama file yang unik dan aman
             $file->move(public_path('images/kegiatan'), $filename);
             
             // Menggunakan nama kolom yang benar ('gambar_url')
@@ -103,6 +107,10 @@ class KegiatanController extends Controller
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
             'gambar_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'linkPendaftran_url' => 'nullable|url',
+        ],[
+            'judul.required' => 'Nama kegiatan wajib diisi',
+            'deskripsi.required' => 'Deskripsi kegiatan wajib diisi.',
+            'tanggal_selesai.after_or_equal' => 'Tanggal selesai harus sama atau setelah tanggal mulai.',
         ]);
 
         // Menggunakan nama kolom yang benar
@@ -113,7 +121,7 @@ class KegiatanController extends Controller
         $kegiatan->linkPendaftaran_url = $request->linkPendaftaran_url;
         
         if ($request->hasFile('gambar_url')) {
-            // Hapus gambar lama jika ada
+            // untuk menghapus gambar lama jika ada
             if ($kegiatan->gambar_url && File::exists(public_path('images/kegiatan/' . $kegiatan->gambar_url))) {
                 File::delete(public_path('images/kegiatan/' . $kegiatan->gambar_url));
             }
@@ -144,5 +152,11 @@ class KegiatanController extends Controller
 
         return redirect()->route('kegiatan.index')->with('success', 'Kegiatan berhasil dihapus');
     }
+
+    // public function show(Kegiatan $kegiatan)
+    // {
+    // return view('kegiatan.show', compact('kegiatan'));
+    // }
+
 }
 

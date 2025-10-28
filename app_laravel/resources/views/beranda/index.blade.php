@@ -38,10 +38,9 @@
         }
 
         .section {
-            padding: 60px 20px;
-            background: url('{{ asset('images/bluebackground.jpg') }}') no-repeat center;
+            padding:0;
             background-size: cover;
-            background-color: #ffffff;
+            background-color: #dfd6d6ff;
             position: relative;
             z-index: 1;
         }
@@ -62,6 +61,7 @@
             font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 40px;
+            margin-top:40px;
             color: #003B73;
         }
 
@@ -88,8 +88,10 @@
         }
 
         .card img.logo {
-            width: 80px;
-            margin-bottom: 15px;
+            display: block;
+            margin: 0 auto; /* 🔹 ini memastikan gambar benar-benar berada di tengah */
+            width: 80px; /* opsional, biar proporsional */
+            height: auto;
         }
 
         .carousel-inner img {
@@ -189,23 +191,29 @@
         <h2 class="text-center mb-4" style="color: #003B73; font-weight: bold;">Kegiatan Fakultas Sains & Teknologi</h2>
 
         <div class="kegiatan-wrapper">
-            <button class="scroll-btn left" onclick="scrollKegiatan(-1)">
-                ‹
+            
+                
             </button>
 
-            <div class="kegiatan-scroll" id="kegiatanScroll">
-                <img src="{{ asset('images/kegiatan/kegiatanbemf.jpg') }}" alt="Kegiatan BEMF">
-                <img src="{{ asset('images/kegiatan/kegiatanhmif.png') }}" alt="Kegiatan HMIF">
-                <img src="{{ asset('images/kegiatan/kegiatankmtm.png') }}" alt="Kegiatan KMTM">
-                <img src="{{ asset('images/kegiatan/kegiatanhmm.png') }}" alt="Kegiatan HMM">
-                <img src="{{ asset('images/kegiatan/kegiatan5.png') }}" alt="Kegiatan 5">
-                <img src="{{ asset('images/kegiatan/kegiatan6.png') }}" alt="Kegiatan 6">
-                <img src="{{ asset('images/kegiatan/kegiatan7.jpeg') }}" alt="Kegiatan 7">
-                <img src="{{ asset('images/kegiatan/kegiatan8.jpeg') }}" alt="Kegiatan 8">
-            </div>
+        <div class="kegiatan-scroll" id="kegiatanScroll">
+            @forelse($kegiatan as $item)
+            <a href="{{ route('kegiatan.show', $item->kegiatan_id) }}">
+                @if($item->gambar_url)
+                    <img src="{{ asset('images/kegiatan/' . $item->gambar_url) }}" 
+                         alt="Poster {{ $item->judul }}" 
+                        title="{{ $item->judul }}">
+                @else
+                     <img src="https://placehold.co/400x250/cccccc/000000?text=Tidak+ada+gambar" 
+                        alt="Tidak ada gambar">
+                 @endif
+                </a>
+             @empty
+                 <p class="text-center">Belum ada kegiatan tersedia.</p>
+            @endforelse
+        </div>
 
-            <button class="scroll-btn right" onclick="scrollKegiatan(1)">
-                ›
+           
+                
             </button>
         </div>
     </div>

@@ -13,11 +13,18 @@ class Profil extends Model
     public $timestamps = false;
     protected $fillable = [
         'ormawa_id',
-        'judul',
-        'deskripsi',
-        'tanggal_mulai',
-        'tanggal_selesai',
-        'linkPendaftaran_url',
-        'poster',
+        'password_hash',
+        'visi',
+        'misi',
+        'deskripsi_profil',
+        'kontak_person',
+        'logo_url',
+        'periode',
+        'nama_ormawa',
     ];
+
+    public function profil()
+    {
+        return $this->belongsTo(Ormawa::class, 'ormawa_id');
+    }
 }

@@ -11,13 +11,15 @@
             <h1>Edit Kegiatan</h1>
             
             @if ($errors->any())
-            <div>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+            <script>
+                @foreach ($errors->all() as $error)
+                     Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi Kesalahan!',
+                        text: "{{ $error }}",
+                    });
+                @endforeach
+            </script>
             @endif
         </div>
     </div>
