@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Kegiatan;
 use Illuminate\Support\Facades\File; // Import class File untuk menghapus gambar
+use Illuminate\Support\Facades\DB;
+
 
 class KegiatanController extends Controller
 {
@@ -153,10 +155,18 @@ class KegiatanController extends Controller
         return redirect()->route('kegiatan.index')->with('success', 'Kegiatan berhasil dihapus');
     }
 
-    // public function show(Kegiatan $kegiatan)
-    // {
-    // return view('kegiatan.show', compact('kegiatan'));
-    // }
+    public function cari(Request $request){
+    // ambil input pencarian
+    $cari = $request->cari;
+
+    // query berdasarkan judul
+    $kegiatans = Kegiatan::where('judul', 'like', '%' . $cari . '%')
+                        ->orderBy('tanggal_mulai', 'desc')
+                        ->paginate(10);
+
+    // kembalikan ke view 
+    return view('kegiatan.index', compact('kegiatans'));
+}
 
 }
 

@@ -179,11 +179,20 @@
     </style>
 
     <div class="hero">
+        
         <h1>Selamat Datang di Website ORMAWA FST</h1>
         <p>Berita acara, kegiatan, dan informasi seputar organisasi mahasiswa Fakultas Sains dan Teknologi</p>
         <a href="{{ route('kegiatan.index') }}" class="btn">Lihat Kegiatan</a>
 
-        
+      <form action="{{ route('kegiatan.cari') }}" method="GET" class="mb-3 p-3">
+        <input type="text" name="cari" value="{{ request('cari') }}"
+           placeholder="Cari kegiatan..."
+           class="form-control d-inline-block me-2 p-2"
+           style="width: 300px;">
+        <button type="submit" class="btn btn-primary px-4 py-2">Cari</button>
+    </form>
+
+           
     </div>
 
 

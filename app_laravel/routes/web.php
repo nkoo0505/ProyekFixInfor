@@ -34,11 +34,12 @@ Route::get('/cek-db', function () {
 
 // Kegiatan, Pertanyaan, Galeri - Bebas akses (index dan show saja)
 //kegiatan
+Route::get('/', [DashboardController::class, 'beranda'])->name('beranda.index');
 Route::get('/kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
+Route::get('/kegiatan/cari', [KegiatanController::class, 'cari'])->name('kegiatan.cari'); 
 Route::get('/kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
 Route::get('/kegiatan/{kegiatan}', [KegiatanController::class, 'show'])->name('kegiatan.show');
-Route::get('/kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
-Route::get('/', [DashboardController::class, 'beranda'])->name('beranda.index');
+
 
 //pertanyaaan
 Route::get('/pertanyaan', [FaqController::class, 'index'])->name('pertanyaan.index');

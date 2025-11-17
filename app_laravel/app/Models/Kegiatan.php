@@ -12,6 +12,7 @@ class Kegiatan extends Model
     protected $primaryKey = 'kegiatan_id';
     public $timestamps = false;
     protected $fillable = [
+        'kegiatan_id',
         'ormawa_id',
         'judul',
         'deskripsi',

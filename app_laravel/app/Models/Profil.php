@@ -9,7 +9,7 @@ class Profil extends Model
 {
     use HasFactory;
     protected $tables = 'ormawa';
-    protected $primaryKeys = 'ormawa_id';
+    protected $primaryKey = 'ormawa_id';
     public $timestamps = false;
     protected $fillable = [
         'ormawa_id',
@@ -21,10 +21,14 @@ class Profil extends Model
         'logo_url',
         'periode',
         'nama_ormawa',
+        'gambar_kegiatan',
     ];
+    
 
-    public function profil()
+    public function kegiatan()
     {
-        return $this->belongsTo(Ormawa::class, 'ormawa_id');
+        return $this->hasMany(Kegiatan::class, 'ormawa_id', 'ormawa_id');
     }
+
+   
 }
