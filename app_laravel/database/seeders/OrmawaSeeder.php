@@ -15,47 +15,59 @@ class OrmawaSeeder extends Seeder
      */
     public function run()
     {
-        Ormawa::create(
+        Ormawa::firstOrCreate(
+            ['singkatan' => 'bem fst'],
             [
                 'nama'      => 'Badan Eksekutif Mahasiswa Fakultas Sains & Teknologi',
-                'singkatan' => 'bem fst',
                 'logo'      => 'logoKABINET.jpg',
                 'deskripsi' => '-',
                 'visi'      => '-',
-                'misi'      => '-'
-            ],
+                'misi'      => '-',
+            ]
+        );
+
+        Ormawa::firstOrCreate(
+            ['singkatan' => 'hmif'],
             [
                 'nama'      => 'Himpunan Mahasiswa Informatika',
-                'singkatan' => 'hmif',
                 'logo'      => 'logoHMIF.jpg',
                 'deskripsi' => 'Forza IT',
                 'visi'      => '-',
-                'misi'      => '-'
-            ],
+                'misi'      => '-',
+            ]
+        );
+
+        Ormawa::firstOrCreate(
+            ['singkatan' => 'hmte'],
             [
                 'nama'      => 'Himpunan Mahasiswa Elektro',
-                'singkatan' => 'hmte',
                 'logo'      => 'logoHMTE.jpg',
                 'deskripsi' => '-',
                 'visi'      => '-',
-                'misi'      => '-'
-            ],
+                'misi'      => '-',
+            ]
+        );
+
+        Ormawa::firstOrCreate(
+            ['singkatan' => 'hmm'],
             [
                 'nama'      => 'Himpunan Mahasiswa Matematika',
-                'singkatan' => 'hmm',
-                'logo'      => 'logoHMM.jpg',
+                'logo'      => 'logoHMM.png',
                 'deskripsi' => '-',
                 'visi'      => '-',
-                'misi'      => '-'
-            ],
+                'misi'      => '-',
+            ]
+        );
+
+        Ormawa::firstOrCreate(
+            ['singkatan' => 'kmtm'],
             [
                 'nama'      => 'Keluarga Mahasiswa Teknik Mesin',
-                'singkatan' => 'kmtm',
                 'logo'      => 'logoKMTM.jpg',
                 'deskripsi' => '-',
                 'visi'      => '-',
-                'misi'      => '-'
-            ],
+                'misi'      => '-',
+            ]
         );
     }
 }

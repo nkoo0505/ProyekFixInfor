@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KegiatanController;
+use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\ProfilController;
-use App\Http\Controllers\FaqController;
+use App\Http\Controllers\AdminProfilController;
+use App\Http\Controllers\FAQController;
 use App\Http\Controllers\PertanyaanController;
 use App\Http\Controllers\GaleriController;
 
@@ -13,48 +15,67 @@ use App\Http\Controllers\GaleriController;
 Route::get('/', [DashboardController::class, 'beranda'])->name('beranda');
 Route::get('/beranda', [DashboardController::class, 'beranda'])->name('beranda');
 
-// Login ORMAWA
+// Login & Logout ORMAWA
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Halaman PROFIL (bebas diakses tanpa login)
-// ** 
+// Halaman PROFIL
+Route::get('/profil', [ProfilController::class, 'index'])->name('profil.index');
 Route::get('/profil/{ormawa_id}', [ProfilController::class, 'show'])->name('profil.show');
 
-// Kegiatan, Pertanyaan, Galeri - Bebas akses (index dan show saja)
-Route::get('/kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
-Route::get('/kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
-Route::get('/kegiatan/{kegiatan}', [KegiatanController::class, 'show'])->name('kegiatan.show');
+// Kegiatan & Galeri - bebas akses
+Route::resource('kegiatan', KegiatanController::class)->only(['index', 'show']);
+Route::resource('galeri', GaleriController::class)->only(['index', 'show']);
 
-Route::get('/pertanyaan', [FaqController::class, 'index'])->name('pertanyaan.index');
-Route::get('/pertanyaan/{pertanyaan}', [FaqController::class, 'show'])->name('pertanyaan.show');
+// ----------------------------------------------------
+// 🔥 PUBLIC ASPIRASI & FAQ (Hanya Menggunakan FAQController)
+// ----------------------------------------------------
+Route::get('/faq', [FAQController::class, 'index'])->name('faq.index');
+Route::get('/faq/{faq}', [FAQController::class, 'show'])->name('faq.show');
 
-Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
-Route::get('/galeri/{galeri}', [GaleriController::class, 'show'])->name('galeri.show');
+// Kirim aspirasi dari user umum (menggunakan store di FAQController)
+Route::post('/aspirasi/kirim', [FAQController::class, 'store'])->name('aspirasi.store'); 
 
-// Halaman CRUD (butuh login manual session)
+
+// ----------------------------------------------------
+// CRUD HANYA UNTUK ADMIN/ORMAWA YANG LOGIN
+// ----------------------------------------------------
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Kegiatan
-    Route::get('/kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
-    Route::post('/kegiatan', [KegiatanController::class, 'store'])->name('kegiatan.store');
-    Route::get('/kegiatan/{kegiatan}/edit', [KegiatanController::class, 'edit'])->name('kegiatan.edit');
-    Route::put('/kegiatan/{kegiatan}', [KegiatanController::class, 'update'])->name('kegiatan.update');
-    Route::delete('/kegiatan/{kegiatan}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
+    // CRUD Kegiatan (Selain index dan show yang sudah di atas)
+    Route::resource('kegiatan', KegiatanController::class)->except(['index', 'show']); 
 
-    // Pertanyaan
-    Route::get('/pertanyaan/create', [PertanyaanController::class, 'create'])->name('pertanyaan.create');
-    Route::post('/pertanyaan', [PertanyaanController::class, 'store'])->name('pertanyaan.store');
-    Route::get('/pertanyaan/{pertanyaan}/edit', [PertanyaanController::class, 'edit'])->name('pertanyaan.edit');
-    Route::put('/pertanyaan/{pertanyaan}', [PertanyaanController::class, 'update'])->name('pertanyaan.update');
-    Route::delete('/pertanyaan/{pertanyaan}', [PertanyaanController::class, 'destroy'])->name('pertanyaan.destroy');
+    // CRUD Galeri (Selain index dan show yang sudah di atas)
+    Route::resource('galeri', GaleriController::class)->except(['index', 'show']);
 
-    // Galeri
-    Route::get('/galeri/create', [GaleriController::class, 'create'])->name('galeri.create');
-    Route::post('/galeri', [GaleriController::class, 'store'])->name('galeri.store');
-    Route::get('/galeri/{galeri}/edit', [GaleriController::class, 'edit'])->name('galeri.edit');
-    Route::put('/galeri/{galeri}', [GaleriController::class, 'update'])->name('galeri.update');
-    Route::delete('/galeri/{galeri}', [GaleriController::class, 'destroy'])->name('galeri.destroy');
+    // CRUD Pengurus
+    Route::resource('pengurus', PengurusController::class)
+        ->parameters(['pengurus' => 'pengurus'])
+        ->except(['show']);
+    
+    // CRUD Profil Admin
+    Route::get('/admin/profil/edit', [AdminProfilController::class, 'edit'])->name('admin.profil.edit');
+    Route::post('/admin/profil', [AdminProfilController::class, 'update'])->name('admin.profil.update');
+
+    // ----------------------------------------------------
+    // 🔥 PENGELOLAAN ASPIRASI ADMIN (Menggunakan PertanyaanController)
+    // ----------------------------------------------------
+    Route::prefix('admin/aspirasi')->name('admin.aspirasi.')->group(function () {
+        
+        // Menampilkan SEMUA aspirasi masuk (admin index)
+        Route::get('/', [PertanyaanController::class, 'index'])->name('index'); 
+        
+        // Menyimpan/Mengupdate balasan (admin store)
+        Route::post('/', [PertanyaanController::class, 'store'])->name('store'); 
+        
+        // Menghapus aspirasi
+        Route::delete('/{id}', [PertanyaanController::class, 'destroy'])->name('destroy');
+        
+        // Route untuk Pertanyaan Internal Antar-Pengurus
+        Route::get('/kirim-internal', [PertanyaanController::class, 'createInternal'])->name('createInternal');
+        Route::post('/kirim-internal/store', [PertanyaanController::class, 'storeInternal'])->name('storeInternal');
+    });
+
 });
