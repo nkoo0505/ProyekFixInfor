@@ -4,48 +4,73 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Kegiatan;
+use Illuminate\Support\Facades\File; // Import class File untuk menghapus gambar
+use Illuminate\Support\Facades\DB;
+
 
 class KegiatanController extends Controller
 {
-    // Tampilkan semua kegiatan
+    /**
+     * Menampilkan semua kegiatan dengan efisien.
+     */
     public function index()
     {
-        $kegiatans = Kegiatan::all();
+        // Menggunakan with('ormawa') untuk mengatasi N+1 Query Problem (lebih cepat)
+        // Mengganti latest() dengan orderBy('tanggal_mulai', 'desc') karena kolom 'created_at' tidak ada
+        $kegiatans = Kegiatan::with('ormawa')->orderBy('tanggal_mulai', 'desc')->get();
         return view('kegiatan.index', compact('kegiatans'));
     }
 
-    // Tampilkan form tambah kegiatan
+    /**
+     * Menampilkan form untuk membuat kegiatan baru.
+     */
     public function create()
     {
         return view('kegiatan.create');
     }
 
-    // Simpan data kegiatan baru
+    /**
+     * Menyimpan data kegiatan baru ke database.
+     */
     public function store(Request $request)
     {
+        // Validasi disesuaikan dengan nama kolom di database
         $request->validate([
-            'nama_kegiatan' => 'required',
-            'deskripsi' => 'required',
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-            'poster' => 'nullable',
-            'link_daftar' => 'nullable|url',
+            'gambar_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120', // Validasi untuk file gambar
+            'linkPendaftaran_url' => 'nullable|url',
+        ],[ 
+            'judul.required' => 'Nama kegiatan wajib diisi',
+            'deskripsi.required' => 'Deskripsi kegiatan wajib diisi.',
+            'tanggal_selesai.after_or_equal' => 'Tanggal selesai harus sama atau setelah tanggal mulai.',
         ]);
 
         $kegiatan = new Kegiatan();
-        $kegiatan->nama_kegiatan = $request->nama_kegiatan;
+        
+        // Menggunakan nama kolom yang benar dari database ('judul')
+        $kegiatan->judul = $request->judul;
         $kegiatan->deskripsi = $request->deskripsi;
         $kegiatan->tanggal_mulai = $request->tanggal_mulai;
         $kegiatan->tanggal_selesai = $request->tanggal_selesai;
-        $kegiatan->link_daftar = $request->link_daftar;
         
-        if ($request->hasFile('poster')) {
-            $file = $request->file('poster');
-            $filename = time() . '-' . $file->getClientOriginalName();
+        // Menggunakan nama kolom yang benar ('link_pendaftaran')
+        $kegiatan->linkPendaftaran_url = $request->linkPendaftaran_url;
+        
+        // Logika untuk upload gambar
+        if ($request->hasFile('gambar_url')) {
+            $file = $request->file('gambar_url');
+            $filename = time() . '-' . $file->getClientOriginalName();// digunakan untuk membuat nama file yang unik dan aman
             $file->move(public_path('images/kegiatan'), $filename);
-            $kegiatan->poster = $filename;
+            
+            // Menggunakan nama kolom yang benar ('gambar_url')
+            $kegiatan->gambar_url = $filename;
         }
 
+        // Mengambil ormawa_id dari user yang sedang login
+        // Pastikan relasi dan properti ini benar di model User/Ormawa Anda
         $kegiatan->ormawa_id = auth()->user()->ormawa_id;
 
         $kegiatan->save();
@@ -53,45 +78,60 @@ class KegiatanController extends Controller
         return redirect()->route('kegiatan.index')->with('success', 'Kegiatan berhasil dibuat');
     }
 
-    // Tampilkan detail kegiatan (optional)
-    public function show($id)
+    /**
+     * Menampilkan detail satu kegiatan.
+     * Menggunakan Route Model Binding (Kegiatan $kegiatan)
+     */
+    public function show(Kegiatan $kegiatan)
     {
-        $kegiatan = Kegiatan::findOrFail($id);
         return view('kegiatan.show', compact('kegiatan'));
     }
 
-    // Tampilkan form edit kegiatan
-    public function edit($id)
+    /**
+     * Menampilkan form untuk mengedit kegiatan.
+     * Menggunakan Route Model Binding (Kegiatan $kegiatan)
+     */
+    public function edit(Kegiatan $kegiatan)
     {
-        $kegiatan = Kegiatan::findOrFail($id);
         return view('kegiatan.edit', compact('kegiatan'));
     }
 
-    // Update data kegiatan
-    public function update(Request $request, $id)
+    /**
+     * Memperbarui data kegiatan di database.
+     * Menggunakan Route Model Binding (Kegiatan $kegiatan)
+     */
+    public function update(Request $request, Kegiatan $kegiatan)
     {
         $request->validate([
-            'nama_kegiatan' => 'required',
-            'deskripsi' => 'required',
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-            'poster' => 'nullable',
-            'link_daftar' => 'nullable|url',
+            'gambar_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'linkPendaftran_url' => 'nullable|url',
+        ],[
+            'judul.required' => 'Nama kegiatan wajib diisi',
+            'deskripsi.required' => 'Deskripsi kegiatan wajib diisi.',
+            'tanggal_selesai.after_or_equal' => 'Tanggal selesai harus sama atau setelah tanggal mulai.',
         ]);
 
-
-        $kegiatan = Kegiatan::findOrFail($id);
-        $kegiatan->nama_kegiatan = $request->nama_kegiatan;
+        // Menggunakan nama kolom yang benar
+        $kegiatan->judul = $request->judul;
         $kegiatan->deskripsi = $request->deskripsi;
         $kegiatan->tanggal_mulai = $request->tanggal_mulai;
         $kegiatan->tanggal_selesai = $request->tanggal_selesai;
-        $kegiatan->link_daftar = $request->link_daftar;
+        $kegiatan->linkPendaftaran_url = $request->linkPendaftaran_url;
         
-        if ($request->hasFile('poster')) {
-            $file = $request->file('poster');
+        if ($request->hasFile('gambar_url')) {
+            // untuk menghapus gambar lama jika ada
+            if ($kegiatan->gambar_url && File::exists(public_path('images/kegiatan/' . $kegiatan->gambar_url))) {
+                File::delete(public_path('images/kegiatan/' . $kegiatan->gambar_url));
+            }
+
+            $file = $request->file('gambar_url');
             $filename = time() . '-' . $file->getClientOriginalName();
             $file->move(public_path('images/kegiatan'), $filename);
-            $kegiatan->poster = $filename;
+            $kegiatan->gambar_url = $filename;
         }
 
         $kegiatan->save();
@@ -99,12 +139,34 @@ class KegiatanController extends Controller
         return redirect()->route('kegiatan.index')->with('success', 'Kegiatan berhasil diupdate');
     }
 
-    // Hapus kegiatan
-    public function destroy($id)
+    /**
+     * Menghapus data kegiatan dari database.
+     * Menggunakan Route Model Binding (Kegiatan $kegiatan)
+     */
+    public function destroy(Kegiatan $kegiatan)
     {
-        $kegiatan = Kegiatan::findOrFail($id);
+        // Hapus gambar terkait dari storage
+        if ($kegiatan->gambar_url && File::exists(public_path('images/kegiatan/' . $kegiatan->gambar_url))) {
+            File::delete(public_path('images/kegiatan/' . $kegiatan->gambar_url));
+        }
+
         $kegiatan->delete();
 
         return redirect()->route('kegiatan.index')->with('success', 'Kegiatan berhasil dihapus');
     }
+
+    public function cari(Request $request){
+    // ambil input pencarian
+    $cari = $request->cari;
+
+    // query berdasarkan judul
+    $kegiatans = Kegiatan::where('judul', 'like', '%' . $cari . '%')
+                        ->orderBy('tanggal_mulai', 'desc')
+                        ->paginate(10);
+
+    // kembalikan ke view 
+    return view('kegiatan.index', compact('kegiatans'));
 }
+
+}
+

@@ -38,13 +38,16 @@ class Kegiatan extends Model
 {
     use HasFactory;
     protected $table = 'kegiatan';
+    protected $primaryKey = 'kegiatan_id';
+    public $timestamps = false;
     protected $fillable = [
+        'kegiatan_id',
         'ormawa_id',
-        'nama_kegiatan',
+        'judul',
         'deskripsi',
         'tanggal_mulai',
         'tanggal_selesai',
-        'link_daftar',
+        'linkPendaftaran_url',
         'poster',
     ];
 

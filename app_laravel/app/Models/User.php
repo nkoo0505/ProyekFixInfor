@@ -4,6 +4,7 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * App\Models\User
@@ -28,18 +29,22 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
-    protected $table = 'users';
+    protected $table = 'ormawa';
+    protected $primaryKey = 'ormawa_id';
+    public $timestamps = false;
 
     protected $fillable = [
         'username',
-        'password',
-        'ormawa_id',
+        'password_has',
+        'ROLE',
     ];
 
-    protected $hidden = ['password'];
+    protected $hidden = ['password_has'];
 
-    public function ormawa()
+    // Laravel akan menggunakan field ini sebagai password
+    public function getAuthPassword()
     {
-        return $this->belongsTo(Ormawa::class, 'ormawa_id');
+        return $this->password_has;
     }
+
 }

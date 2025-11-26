@@ -34,6 +34,28 @@ Route::resource('galeri', GaleriController::class)->only(['index', 'show']);
 Route::get('/faq', [FAQController::class, 'index'])->name('faq.index');
 Route::get('/faq/{faq}', [FAQController::class, 'show'])->name('faq.show');
 
+//route sementara untuk memeriksa koneksi
+use Illuminate\Support\Facades\DB;
+
+Route::get('/cek-db', function () {
+    return DB::connection()->getDatabaseName();
+});
+
+
+
+// Kegiatan, Pertanyaan, Galeri - Bebas akses (index dan show saja)
+//kegiatan
+Route::get('/', [DashboardController::class, 'beranda'])->name('beranda.index');
+Route::get('/kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
+Route::get('/kegiatan/cari', [KegiatanController::class, 'cari'])->name('kegiatan.cari'); 
+Route::get('/kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
+Route::get('/kegiatan/{kegiatan}', [KegiatanController::class, 'show'])->name('kegiatan.show');
+
+
+//pertanyaaan
+Route::get('/pertanyaan', [FaqController::class, 'index'])->name('pertanyaan.index');
+Route::get('/pertanyaan/{pertanyaan}', [FaqController::class, 'show'])->name('pertanyaan.show');
+
 // Kirim aspirasi dari user umum (menggunakan store di FAQController)
 Route::post('/aspirasi/kirim', [FAQController::class, 'store'])->name('aspirasi.store'); 
 

@@ -10,6 +10,37 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="{{ asset('css/kegiatan.css') }}" rel="stylesheet">
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        footer {
+            background-color: #002b5b;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -33,6 +64,8 @@
                                 aria-expanded="false">
                                 Profil
                             </a>
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">Profil</a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{ url('/profil/bem') }}">BEMF</a></li>
                                 <li><a class="dropdown-item" href="{{ url('/profil/hmif') }}">HMIF</a></li>
@@ -70,7 +103,7 @@
                             <a class="nav-link" aria-current="page" href="{{ route('galeri.index') }}">Galeri</a>
                         </li> --}}
                     </ul>
-                    <div class="">
+                    <div>
                         @guest
                             <a href="{{ route('login') }}" class="btn btn-primary"><strong>Login</strong></a>
                         @else
@@ -92,9 +125,7 @@
     <footer style="position: relative; bottom: 0;">
         <p>&copy; {{ date('Y') }} ORMAWA FST</p>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-
 </html>

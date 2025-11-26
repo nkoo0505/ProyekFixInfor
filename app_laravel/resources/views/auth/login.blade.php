@@ -4,8 +4,16 @@
 <div class="login-container">
     <h2>Login ORMAWA</h2>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @if(session('error'))
-        <p style="color: yellow; text-align:center;">{{ session('error') }}</p>
+        <script>
+                     Swal.fire({
+                        icon: 'error',
+                        title: 'Terjadi Kesalahan!',
+                        text: "{{ session('error') }}",
+                    });
+            </script>
     @endif
 
     <form action="{{ route('login') }}" method="POST">

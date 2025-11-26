@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Profil;
 use Illuminate\Http\Request;
 use App\Models\Ormawa; // Import Model Ormawa
 
@@ -25,7 +25,12 @@ class ProfilController extends Controller
         });
 
         return view('profil.index', ['ormawaList' => $ormawaData]);
+
+    public function create()
+    {
+        return view('ormawa.create');
     }
+               
 
     /**
      * Menampilkan Detail Satu Ormawa untuk halaman Show Profil.
