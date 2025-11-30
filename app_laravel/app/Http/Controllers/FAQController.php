@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\FAQ; // 👈 IMPORT BARU
-use App\Models\Pendapat; // 👈 IMPORT BARU
+use App\Models\FAQ;
+use App\Models\Pendapat;
 
 class FAQController extends Controller
 {

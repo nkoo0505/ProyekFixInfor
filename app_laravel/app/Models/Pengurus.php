@@ -38,9 +38,9 @@ class Pengurus extends Model
         'ormawa_id',
         'nama',
         'jabatan',
-        'nama_panggilan', // 🔥 Tambahkan ini
-        'tahun_jabatan',  // 🔥 Tambahkan ini (Jika tipe data di DB String/Tahun)
-        'foto' 
+        'foto',
+        'nama_panggilan',
+        'tahun_jabatan',
     ];
 
     public function ormawa()

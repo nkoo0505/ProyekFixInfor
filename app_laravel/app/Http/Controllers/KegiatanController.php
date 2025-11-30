@@ -38,6 +38,7 @@ class KegiatanController extends Controller
         $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
+            'nama_ormawa' => 'nullable|string|max:255',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
             'gambar_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120', // Validasi untuk file gambar
@@ -105,6 +106,7 @@ class KegiatanController extends Controller
         $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
+            'nama_ormawa' => 'nullable|string|max:255',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
             'gambar_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
