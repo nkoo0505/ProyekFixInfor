@@ -23,4 +23,9 @@ class Ormawa extends Authenticatable
     {
         return $this->password_has;
     }
+
+    public function kegiatan()
+    {
+        return $this->hasMany(Kegiatan::class, 'ormawa_id', 'ormawa_id');
+    }
 }

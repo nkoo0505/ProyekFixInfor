@@ -13,7 +13,9 @@ class Pengurus extends Model
         'ormawa_id',
         'nama',
         'jabatan',
-        'foto'
+        'foto',
+        'nama_panggilan',
+        'tahun_jabatan',
     ];
 
     public function ormawa()

@@ -118,18 +118,17 @@
 
     <div class="event-details">
         <p><strong>Ormawa:</strong> {{ $kegiatan->ormawa->nama_ormawa ?? 'Tidak diketahui' }}</p>
-        <p><strong>Deskripsi:</strong></p>
-        <p style="text-align: justify;">{!! nl2br(e($kegiatan->deskripsi)) !!}</p>
+        <p><strong>Deskripsi:</strong> {{ $kegiatan->deskripsi}} </p>
+        <!-- <p style="text-align: justify;">{!! nl2br(e($kegiatan->deskripsi)) !!}</p> -->
         <a href="{{ $kegiatan->linkPendaftaran_url }}" target="_blank" class="btn btn-info">
             <i class="bi bi-link-45deg"></i> Link Pendaftaran</a>
     </div>
 
     <div class="divider"></div>
 
-    <div class="btn-section">
+    <div class="btn-section ">
         <a href="{{ route('beranda') }}" class="btn btn-primary">
-            <i class="bi bi-arrow-left-circle"></i> Kembali
-        </a>
+            <i class="bi bi-arrow-left-circle"></i> Kembali</a>
     </div>
 </div>
 @endsection

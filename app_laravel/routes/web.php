@@ -5,13 +5,16 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\ProfilController;
-use App\Http\Controllers\FaqController;
+use App\Http\Controllers\PengurusController;
+use App\Http\Controllers\FAQController;
 use App\Http\Controllers\PertanyaanController;
 use App\Http\Controllers\GaleriController;
+
 
 // Halaman Beranda
 Route::get('/', [DashboardController::class, 'beranda'])->name('beranda');
 Route::get('/beranda', [DashboardController::class, 'beranda'])->name('beranda');
+
 
 // Login ORMAWA
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
@@ -20,7 +23,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Halaman PROFIL (bebas diakses tanpa login)
 // ** 
+// Halaman PROFIL (bebas diakses tanpa login)
+Route::get('/profil', [ProfilController::class, 'index'])->name('profil.index');
 Route::get('/profil/{ormawa_id}', [ProfilController::class, 'show'])->name('profil.show');
+// Route::get('/profil/{ormawa_id}', [ProfilController::class, 'show'])->name('profil.show');
 
 
 //route sementara untuk memeriksa koneksi
@@ -41,9 +47,9 @@ Route::get('/kegiatan/create', [KegiatanController::class, 'create'])->name('keg
 Route::get('/kegiatan/{kegiatan}', [KegiatanController::class, 'show'])->name('kegiatan.show');
 
 
-//pertanyaaan
-Route::get('/pertanyaan', [FaqController::class, 'index'])->name('pertanyaan.index');
-Route::get('/pertanyaan/{pertanyaan}', [FaqController::class, 'show'])->name('pertanyaan.show');
+//pertanyaaan (publik: FAQ + form aspirasi)
+Route::get('/pertanyaan', [FAQController::class, 'index'])->name('pertanyaan.index');
+Route::post('/pertanyaan', [FAQController::class, 'store'])->name('aspirasi.store');
 
 Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
 Route::get('/galeri/{galeri}', [GaleriController::class, 'show'])->name('galeri.show');
@@ -52,6 +58,15 @@ Route::get('/galeri/{galeri}', [GaleriController::class, 'show'])->name('galeri.
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // Profil ORMAWA yang sedang login
+    Route::get('/profilku', [ProfilController::class, 'editSelf'])->name('profilku.edit');
+    Route::put('/profilku', [ProfilController::class, 'updateSelf'])->name('profilku.update');
+
+    // Struktur kepengurusan ORMAWA yang sedang login
+    Route::post('/pengurus', [PengurusController::class, 'store'])->name('pengurus.store');
+    Route::put('/pengurus/{pengurus}', [PengurusController::class, 'update'])->name('pengurus.update');
+    Route::delete('/pengurus/{pengurus}', [PengurusController::class, 'destroy'])->name('pengurus.destroy');
+
     // Kegiatan
     Route::get('/kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
     Route::post('/kegiatan', [KegiatanController::class, 'store'])->name('kegiatan.store');
@@ -59,12 +74,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/kegiatan/{kegiatan}', [KegiatanController::class, 'update'])->name('kegiatan.update');
     Route::delete('/kegiatan/{kegiatan}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
 
-    // Pertanyaan
-    Route::get('/pertanyaan/create', [PertanyaanController::class, 'create'])->name('pertanyaan.create');
-    Route::post('/pertanyaan', [PertanyaanController::class, 'store'])->name('pertanyaan.store');
-    Route::get('/pertanyaan/{pertanyaan}/edit', [PertanyaanController::class, 'edit'])->name('pertanyaan.edit');
-    Route::put('/pertanyaan/{pertanyaan}', [PertanyaanController::class, 'update'])->name('pertanyaan.update');
-    Route::delete('/pertanyaan/{pertanyaan}', [PertanyaanController::class, 'destroy'])->name('pertanyaan.destroy');
+    // Pertanyaan (admin: kelola pendapat & balasan)
+    Route::prefix('admin/pertanyaan')->name('admin.pertanyaan.')->group(function () {
+        Route::get('/', [PertanyaanController::class, 'index'])->name('index');
+        Route::post('/balas', [PertanyaanController::class, 'store'])->name('balas');
+        Route::delete('/{id}', [PertanyaanController::class, 'destroy'])->name('destroy');
+    });
 
     // Galeri
     Route::get('/galeri/create', [GaleriController::class, 'create'])->name('galeri.create');

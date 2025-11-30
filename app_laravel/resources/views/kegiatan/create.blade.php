@@ -1,6 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .kegiatan-wrapper {
+        max-width: 900px;         /* Agar form tidak terlalu melebar */
+        margin: 40px auto;        /* Tengah + beri jarak atas bawah */
+        padding: 30px 40px;       /* Biar konten tidak mepet */
+        background: #ffffff;      /* Kotak putih bersih */
+        border-radius: 12px;      /* Sudut melengkung */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); 
+    }
+
+    .kegiatan-wrapper h1 {
+        font-weight: bold;
+        color: #003B73;
+        margin-bottom: 25px;
+    }
+
+    .kegiatan-wrapper label {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .kegiatan-wrapper .form-control {
+        margin-bottom: 15px; /* Konsisten antar input */
+    }
+
+    .btn-dark {
+        margin-left: 10px;
+        margin-top: 20px;
+    }
+
+    .btn-success {
+        padding: 10px 25px;
+        font-weight: bold;
+    }
+</style>
+
 <div class="container-fluid">
     <div class="row">
         <div class="mt-4">
@@ -37,6 +73,13 @@
                 <div class="mt-3">
                     <label>Deskripsi:</label>
                     <textarea class="form-control" name="deskripsi" placeholder="Deskripsikan kegiatan">{{ old('deskripsi') }}</textarea>
+                </div>
+
+                <div class="mt-3">
+                    <label>Ormawa yang melaksanakan:</label>
+                    <input class="form-control" 
+                    value="{{ auth()->user()->nama_ormawa }}" 
+                    readonly>
                 </div>
 
                 

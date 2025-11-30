@@ -43,6 +43,7 @@
             background-color: #dfd6d6ff;
             position: relative;
             z-index: 1;
+            margin-bottom: 20px 20px;
         }
 
         .section::before {
@@ -69,6 +70,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 25px;
+            /* margin-bottom: 80px; */
         }
 
         .card {
@@ -89,8 +91,8 @@
 
         .card img.logo {
             display: block;
-            margin: 0 auto; /* 🔹 ini memastikan gambar benar-benar berada di tengah */
-            width: 80px; /* opsional, biar proporsional */
+            margin: 0 auto; /* ini memastikan gambar benar-benar berada di tengah */
+            width: 80px; 
             height: auto;
         }
 
@@ -107,6 +109,7 @@
             justify-content: space-around;
             padding: 50px 20px;
             flex-wrap: wrap;
+            margin-bottom: 80px;
         }
 
         .stat {
@@ -115,15 +118,15 @@
         }
 
         .stat h2 {
-            font-size: 2.5rem;
+            font-size: 5rem;
             font-weight: bold;
         }
 
         .stat p {
-            font-size: 1.2rem;
+            font-size: 3rem;
         }
 
-        <style>.kegiatan-wrapper {
+        .kegiatan-wrapper {
             position: relative;
             overflow: hidden;
             padding: 10px 40px;
@@ -135,6 +138,7 @@
             overflow-x: auto;
             scroll-behavior: smooth;
             padding-bottom: 10px;
+            position: center;
         }
 
         .kegiatan-scroll img {
@@ -142,6 +146,7 @@
             border-radius: 15px;
             flex-shrink: 0;
             transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .kegiatan-scroll img:hover {
@@ -171,107 +176,98 @@
             right: 0;
         }
 
+        .beranda-ormawa-row {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            padding: 40px 40px 60px;
+        }
 
-  
-    </style>
+        .beranda-ormawa-row .card {
+            flex: 0 0 210px;
+            max-width: 220px;
+        }
 
-
+        @media (max-width: 992px) {
+            .beranda-ormawa-row {
+                flex-wrap: wrap;
+                padding: 30px 15px 40px;
+            }
+        }
     </style>
 
     <div class="hero">
-        
         <h1>Selamat Datang di Website ORMAWA FST</h1>
         <p>Berita acara, kegiatan, dan informasi seputar organisasi mahasiswa Fakultas Sains dan Teknologi</p>
-        <a href="{{ route('kegiatan.index') }}" class="btn">Lihat Kegiatan</a>
 
-      <form action="{{ route('kegiatan.cari') }}" method="GET" class="mb-3 p-3">
-        <input type="text" name="cari" value="{{ request('cari') }}"
-           placeholder="Cari kegiatan..."
-           class="form-control d-inline-block me-2 p-2"
-           style="width: 300px;">
-        <button type="submit" class="btn btn-primary px-4 py-2">Cari</button>
-    </form>
-
-           
+        <!-- bagian cari kegiatan -->
+        <form action="{{ route('kegiatan.cari') }}" method="GET" class="mb-3 p-3">
+            <input type="text" name="cari" value="{{ request('cari') }}"
+                   placeholder="Cari kegiatan..."
+                   class="form-control d-inline-block me-2 p-2"
+                   style="width: 300px;">
+            <button type="submit" class="btn btn-primary px-4 py-2">Cari</button>
+        </form>
     </div>
-
 
     <div class="container my-5 position-relative">
         <h2 class="text-center mb-4" style="color: #003B73; font-weight: bold;">Kegiatan Fakultas Sains & Teknologi</h2>
 
         <div class="kegiatan-wrapper">
-            
-                
-            </button>
-
-        <div class="kegiatan-scroll" id="kegiatanScroll">
-            @forelse($kegiatan as $item)
-            <a href="{{ route('kegiatan.show', $item->kegiatan_id) }}">
-                @if($item->gambar_url)
-                    <img src="{{ asset('images/kegiatan/' . $item->gambar_url) }}" 
-                         alt="Poster {{ $item->judul }}" 
-                        title="{{ $item->judul }}">
-                @else
-                     <img src="https://placehold.co/400x250/cccccc/000000?text=Tidak+ada+gambar" 
-                        alt="Tidak ada gambar">
-                 @endif
-                </a>
-             @empty
-                 <p class="text-center">Belum ada kegiatan tersedia.</p>
-            @endforelse
-        </div>
-
-           
-                
-            </button>
+            <div class="kegiatan-scroll" id="kegiatanScroll">
+                @forelse($kegiatan as $item)
+                    <a href="{{ route('kegiatan.show', $item->kegiatan_id) }}">
+                        @if($item->gambar_url)
+                            <img src="{{ asset('images/kegiatan/' . $item->gambar_url) }}" 
+                                 alt="Poster {{ $item->judul }}" 
+                                 title="{{ $item->judul }}">
+                        @else
+                            <img src="https://placehold.co/400x250/cccccc/000000?text=Tidak+ada+gambar" 
+                                 alt="Tidak ada gambar">
+                        @endif
+                    </a>
+                @empty
+                    <p class="text-center">Belum ada kegiatan tersedia.</p>
+                @endforelse
+            </div>
         </div>
     </div>
 
-    
-
     <div class="stats">
         <div class="stat">
-            <h2>120+</h2>
-            <p>Program Kerja</p>
-        </div>
-        <div class="stat">
-            <h2>30+</h2>
-            <p>Kegiatan Tahunan</p>
-        </div>
-        <div class="stat">
-            <h2>100%</h2>
-            <p>Partisipasi Aktif</p>
+            <h3>Organisasi Kami</h3>
         </div>
     </div>
 
     <div class="section">
-        <h2 class="section-title">Organisasi Kami</h2>
-        <div class="card-container">
-            <a href="{{ route('profil.show', 'bem') }}" class="card">
-                <img src="{{ asset('images/logoKABINET.jpg') }}" alt="BEM FST Logo" class="logo">
-                <h3>BEM FST</h3>
-                <p>Kepengurusan aktif dan kegiatan mahasiswa Fakultas Sains & Teknologi</p>
-            </a>
-            <a href="{{ route('profil.show', 'hmif') }}" class="card">
-                <img src="{{ asset('images/logoHMIF.jpg') }}" alt="HMIF Logo" class="logo">
-                <h3>HMIF</h3>
-                <p>Himpunan Mahasiswa Informatika</p>
-            </a>
-            <a href="{{ route('profil.show', 'hmte') }}" class="card">
-                <img src="{{ asset('images/logoHMTE.jpg') }}" alt="HMTE Logo" class="logo">
-                <h3>HMTE</h3>
-                <p>Himpunan Mahasiswa Elektro</p>
-            </a>
-            <a href="{{ route('profil.show', 'hmm') }}" class="card">
-                <img src="{{ asset('images/logoHMM.png') }}" alt="HMM Logo" class="logo">
-                <h3>HMM</h3>
-                <p>Himpunan Mahasiswa Matematika</p>
-            </a>
-            <a href="{{ route('profil.show', 'kmtm') }}" class="card">
-                <img src="{{ asset('images/logoKMTM.jpg') }}" alt="KMTM Logo" class="logo">
-                <h3>KMTM</h3>
-                <p>Keluarga Mahasiswa Teknik Mesin</p>
-            </a>
+        <div class="container">
+            <div class="beranda-ormawa-row">
+                <a href="{{ route('profil.show', 1) }}" class="card">
+                    <img src="{{ asset('images/logoKABINET.jpg') }}" alt="BEM FST Logo" class="logo">
+                    <h3>BEM FST</h3>
+                    <p>Kepengurusan aktif dan kegiatan mahasiswa Fakultas Sains & Teknologi</p>
+                </a>
+                <a href="{{ route('profil.show', 5) }}" class="card">
+                    <img src="{{ asset('images/logoHMIF.jpg') }}" alt="HMIF Logo" class="logo">
+                    <h3>HMIF</h3>
+                    <p>Himpunan Mahasiswa Informatika</p>
+                </a>
+                <a href="{{ route('profil.show', 3) }}" class="card">
+                    <img src="{{ asset('images/logoHMTE.jpg') }}" alt="HMTE Logo" class="logo">
+                    <h3>HMTE</h3>
+                    <p>Himpunan Mahasiswa Elektro</p>
+                </a>
+                <a href="{{ route('profil.show', 2) }}" class="card">
+                    <img src="{{ asset('images/logoHMM.png') }}" alt="HMM Logo" class="logo">
+                    <h3>HMM</h3>
+                    <p>Himpunan Mahasiswa Matematika</p>
+                </a>
+                <a href="{{ route('profil.show', 4) }}" class="card">
+                    <img src="{{ asset('images/logoKMTM.jpg') }}" alt="KMTM Logo" class="logo">
+                    <h3>KMTM</h3>
+                    <p>Keluarga Mahasiswa Teknik Mesin</p>
+                </a>
+            </div>
         </div>
     </div>
 

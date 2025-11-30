@@ -40,6 +40,14 @@
                 
                 </div>
                 
+                <div class="mt-3">
+                    <label>Ormawa yang melaksanakan:</label>
+                    <input class="form-control" 
+                     value="{{ auth()->user()->nama_ormawa }}" 
+                     readonly>
+                </div>
+
+
                 <div class="mt-3">    
                     <label>Tanggal Mulai:</label>
                     <input required type="date" name="tanggal_mulai" class="form-control" value="{{ $kegiatan->tanggal_mulai }}">
