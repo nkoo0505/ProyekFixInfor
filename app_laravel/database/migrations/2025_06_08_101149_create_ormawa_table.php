@@ -6,30 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('ormawa', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama', 100);
-            $table->string('singkatan', 20);
+            $table->id(); // INI MEMBUAT KOLOM 'id' (BigInteger)
+            
+            // Kolom lainnya...
+            $table->string('nama');
+            $table->string('singkatan')->nullable();
             $table->string('logo')->nullable();
-            $table->text('deskripsi');
-            $table->text('visi');
-            $table->text('misi');
+            $table->text('deskripsi')->nullable();
+            $table->text('visi')->nullable();
+            $table->text('misi')->nullable();
+            $table->string('username')->nullable();
+            $table->string('password_has')->nullable();
+            $table->string('role')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('ormawa');
