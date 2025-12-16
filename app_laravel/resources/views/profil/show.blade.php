@@ -32,11 +32,11 @@
         @if(count($highlightImages) > 1)
             <button class="carousel-control-prev" type="button" data-bs-target="#profilHighlightCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
+                <span class="visually-hidden">Sebelumnya</span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#profilHighlightCarousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
+                <span class="visually-hidden">Lanjut</span>
             </button>
         @endif
     </div>

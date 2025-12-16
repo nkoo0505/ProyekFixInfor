@@ -28,4 +28,9 @@ class Ormawa extends Authenticatable
     {
         return $this->hasMany(Kegiatan::class, 'ormawa_id', 'ormawa_id');
     }
+
+    public function pemilihan()
+    {
+        return $this->hasMany(Pemilihan::class, 'ormawa_id', 'ormawa_id');
+    }
 }

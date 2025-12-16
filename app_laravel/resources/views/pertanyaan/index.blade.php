@@ -1,6 +1,41 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    /* ===== FULL BLUE BACKGROUND UNTUK ASPIRASI & FAQ ===== */
+.full-blue-section {
+    width: 100%;
+    background-color: #004b93;
+    position: relative;
+}
+
+/* Hilangkan gradasi body */
+body {
+    background: #004b93 !important;
+}
+
+/* Jarak aman dari navbar */
+.faq-page {
+    padding-top: 3rem;
+}
+
+/* Judul putih kontras */
+.faq-page h3,
+.faq-section h3 {
+    color: #ffffff;
+}
+
+/* FAQ card tetap putih */
+.faq-section .accordion-item {
+    background-color: #ffffff;
+}
+
+/* Supaya batas ke footer rapi */
+.faq-section {
+    padding-bottom: 4rem;
+}
+</style>
+<div class="full-blue-section">
 <div class="faq-page py-5">
     <div class="container">
         {{-- 1. FORM KIRIM ASPIRASI --}}
@@ -52,10 +87,10 @@
                 <h3 class="fw-bold mb-3 text-white" style="letter-spacing: -1px; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                     Aspirasi Terjawab
                 </h3>
-                <form action="{{ route('pertanyaan.index') }}" method="GET">
+                <form id="searchForm" action="{{ route('pertanyaan.index') }}" method="GET">
                     <div class="input-group shadow rounded-pill overflow-hidden bg-white border-0 p-1">
                         <span class="input-group-text bg-white border-0 ps-3 text-muted"><i class="bi bi-search"></i></span>
-                        <input type="text" name="search" class="form-control border-0 shadow-none" 
+                        <input type="text" id="searchInput" name="search" class="form-control border-0 shadow-none" 
                                placeholder="Cari topik pertanyaan..." value="{{ request('search') }}">
                         <button class="btn btn-primary px-4 rounded-pill" type="submit" 
                                 style="background-color: #004b93; border-color: #004b93;">Cari</button>
@@ -151,8 +186,75 @@
             @endforelse
         </div>
 
+        {{-- ================= FAQ SECTION ================= --}}
+<div class="faq-section py-5">
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <h3 class="fw-bold text-white mb-2"
+                style="letter-spacing:-1px; text-shadow:0 2px 4px rgba(0,0,0,0.2);">
+                Frequently Asked Questions
+            </h3>
+            <p class="text-white-50">
+                Pertanyaan yang sering diajukan seputar ORMAWA FST
+            </p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+
+                <div class="accordion accordion-flush" id="faqAccordion">
+                    @forelse($faqs as $index => $faq)
+                        <div class="accordion-item mb-3 rounded-4 overflow-hidden shadow-sm">
+                            <h2 class="accordion-header" id="faqHeading{{ $index }}">
+                                <button class="accordion-button collapsed fw-semibold"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqCollapse{{ $index }}"
+                                        style="color:#004b93;">
+                                    <i class="bi bi-question-circle-fill me-2 text-primary"></i>
+                                    {{ $faq->pertanyaan_faq }}
+                                </button>
+                            </h2>
+
+                            <div id="faqCollapse{{ $index }}"
+                                 class="accordion-collapse collapse"
+                                 data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted bg-white">
+                                    {{ $faq->jawaban_faq }}
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="text-center py-5">
+                            <i class="bi bi-info-circle fs-1 text-white mb-3 d-block"></i>
+                            <p class="text-white-50 mb-0">
+                                Belum ada FAQ yang tersedia.
+                            </p>
+                        </div>
+                    @endforelse
+                </div>
+
+            </div>
+        </div>
+        </div>
     </div>
 </div>
+
+
+{{-- Tambahkan JS untuk submit otomatis saat input search dikosongkan --}}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const searchForm = document.getElementById('searchForm');
+
+    searchInput.addEventListener('input', function() {
+        if (this.value.trim() === '') {
+            searchForm.submit();
+        }
+    });
+});
+</script>
 
 <style>
     body {

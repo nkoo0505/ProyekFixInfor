@@ -2,113 +2,162 @@
 
 @section('content')
 <style>
-    .kegiatan-wrapper {
-        max-width: 900px;         /* Agar form tidak terlalu melebar */
-        margin: 40px auto;        /* Tengah + beri jarak atas bawah */
-        padding: 30px 40px;       /* Biar konten tidak mepet */
-        background: #ffffff;      /* Kotak putih bersih */
-        border-radius: 12px;      /* Sudut melengkung */
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); 
+    body { background-color: #f4f6f9; }
+    
+    .form-card {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        border: none;
+        overflow: hidden;
     }
 
-    .kegiatan-wrapper h1 {
-        font-weight: bold;
-        color: #003B73;
-        margin-bottom: 25px;
+    .form-header {
+        background: #003B73; /* Warna Primary Konsisten */
+        padding: 25px;
+        color: white;
     }
 
-    .kegiatan-wrapper label {
+    .form-label {
         font-weight: 600;
-        margin-bottom: 5px;
+        color: #495057;
+        margin-bottom: 8px;
     }
 
-    .kegiatan-wrapper .form-control {
-        margin-bottom: 15px; /* Konsisten antar input */
+    .form-control:focus {
+        border-color: #003B73;
+        box-shadow: 0 0 0 0.2rem rgba(0, 59, 115, 0.15);
     }
 
-    .btn-dark {
-        margin-left: 10px;
-        margin-top: 20px;
+    .btn-back {
+        background-color: transparent;
+        color: #6c757d;
+        border: 1px solid #ced4da;
+        transition: all 0.3s;
+    }
+    .btn-back:hover {
+        background-color: #e9ecef;
+        color: #495057;
     }
 
-    .btn-success {
-        padding: 10px 25px;
-        font-weight: bold;
+    /* Area Upload Gambar Sederhana */
+    .upload-area {
+        border: 2px dashed #ced4da;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        background: #f8f9fa;
+        transition: border-color 0.3s;
+    }
+    .upload-area:hover {
+        border-color: #003B73;
     }
 </style>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="mt-4">
-            <a href="{{ route('kegiatan.index') }}" class="btn btn-dark">Kembali</a>
-        </div>
-        
-        <div class="mt-3">
-            <h1>Tambah Kegiatan Baru</h1>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
             
-             @if ($errors->any())
-            <script>
-                @foreach ($errors->all() as $error)
-                     Swal.fire({
-                        icon: 'error',
-                        title: 'Terjadi Kesalahan!',
-                        text: "{{ $error }}",
-                    });
-                @endforeach
-            </script>
-            @endif
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col">
-            <form action="{{ route('kegiatan.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+            {{-- Tombol Kembali --}}
+            <div class="mb-4">
+                <a href="{{ route('kegiatan.index') }}" class="btn btn-back rounded-pill px-4">
+                    <i class="bi bi-arrow-left me-2"></i> Kembali ke Daftar
+                </a>
+            </div>
 
-                <div class="mt-2">    
-                    <label>Nama Kegiatan:</label>
-                    <input required type="text" name="judul" value="{{ old('judul') }}" class="form-control" placeholder="Masukkan nama kegiatan">
-                </div>
-
-                <div class="mt-3">
-                    <label>Deskripsi:</label>
-                    <textarea class="form-control" name="deskripsi" placeholder="Deskripsikan kegiatan">{{ old('deskripsi') }}</textarea>
-                </div>
-
-                <div class="mt-3">
-                    <label>Ormawa yang melaksanakan:</label>
-                    <input class="form-control" 
-                    value="{{ auth()->user()->nama_ormawa }}" 
-                    readonly>
-                </div>
-
+            {{-- Kartu Form --}}
+            <div class="card form-card">
                 
-                <div class="mt-3">    
-                    <label>Tanggal Mulai:</label>
-                    <input required type="date" name="tanggal_mulai" class="form-control" value="{{ old('tanggal_mulai') }}">
+                {{-- Header Biru --}}
+                <div class="form-header d-flex align-items-center justify-content-between">
+                    <h4 class="mb-0 fw-bold"><i class="bi bi-plus-circle me-2"></i> Tambah Kegiatan Baru</h4>
                 </div>
 
-                <div class="mt-3">    
-                    <label>Tanggal Selesai:</label>
-                    <input required type="date" name="tanggal_selesai" class="form-control" value="{{ old('tanggal_selesai') }}">
-                </div>
+                <div class="card-body p-4 p-md-5">
 
-                <div class="mt-3">    
-                    <label>Tautan Pendaftaran:</label>
-                    <input type="url" name="linkPendaftaran_url" placeholder="Masukkan tautan pendaftaran kegiatan" class="form-control" value="{{ old('linkPendaftaran_url') }}">
-                </div>
 
-                <div class="mt-3">
-                    <label>Poster Kegiatan:</label>
-                    <input type="file" accept="image/*" class="form-control" name="gambar_url">
-                    <span class="text-secondary">Gambar kegiatan tidak wajib diisi</span>
+                    <form action="{{ route('kegiatan.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+
+                        {{-- Input: Judul --}}
+                        <div class="mb-4">
+                            <label class="form-label">Nama Kegiatan <span class="text-danger">*</span></label>
+                            <input type="text" name="judul" value="{{ old('judul') }}" class="form-control form-control-lg" placeholder="Contoh: Seminar Nasional Teknologi 2025" required>
+                        </div>
+
+                        {{-- Input: Deskripsi --}}
+                        <div class="mb-4">
+                            <label class="form-label">Deskripsi Lengkap</label>
+                            <textarea class="form-control" name="deskripsi" rows="5" placeholder="Jelaskan detail kegiatan, tujuan, dan sasaran peserta...">{{ old('deskripsi') }}</textarea>
+                        </div>
+
+                        {{-- Row: Ormawa & Link --}}
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Penyelenggara (Ormawa)</label>
+                                <input type="text" class="form-control bg-light" value="{{ auth()->user()->nama_ormawa }}" readonly>
+                                <small class="text-muted"><i class="bi bi-lock-fill me-1"></i> Otomatis terisi</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Link Pendaftaran <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white"><i class="bi bi-link-45deg"></i></span>
+                                    <input type="url" name="linkPendaftaran_url" value="{{ old('linkPendaftaran_url') }}" class="form-control" placeholder="https://" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Row: Tanggal --}}
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Tanggal Mulai <span class="text-danger">*</span></label>
+                                <input type="date" name="tanggal_mulai" value="{{ old('tanggal_mulai') }}" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Tanggal Selesai <span class="text-danger">*</span></label>
+                                <input type="date" name="tanggal_selesai" value="{{ old('tanggal_selesai') }}" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <hr class="my-4 text-muted">
+
+                        {{-- Input: Gambar --}}
+                        <div class="mb-4">
+                            <label class="form-label d-block">Poster Kegiatan</label>
+                            <div class="upload-area">
+                                <input type="file" name="gambar_url" class="form-control mb-2" accept="image/*">
+                                <div class="small text-muted">
+                                    <i class="bi bi-info-circle me-1"></i> Format: JPG, PNG, JPEG. Maks: 2MB. (Opsional)
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Tombol Aksi --}}
+                        <div class="d-flex justify-content-end gap-2 mt-5">
+                            <a href="{{ route('kegiatan.index') }}" class="btn btn-light border px-4">Batal</a>
+                            <button type="submit" class="btn btn-success px-5 fw-bold shadow-sm">
+                                <i class="bi bi-check-lg me-2"></i> Simpan Kegiatan
+                            </button>
+                        </div>
+
+                    </form>
                 </div>
-                
-                <div class="mt-4 text-end">
-                    <button type="submit" class="btn btn-success px-4"><strong>SIMPAN</strong></button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
+
+{{-- SweetAlert Script --}}
+@if ($errors->any())
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Validasi Gagal',
+        text: 'Mohon periksa kembali isian formulir Anda.',
+        confirmButtonColor: '#003B73'
+    });
+</script>
+@endif
+
 @endsection

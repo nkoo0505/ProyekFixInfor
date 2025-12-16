@@ -1,0 +1,34 @@
+<style>
+    /* ===== FULL BLUE BACKGROUND UNTUK ASPIRASI & FAQ ===== */
+.full-blue-section {
+    width: 100%;
+    background-color: #004b93;
+    position: relative;
+}
+
+/* Hilangkan gradasi body */
+body {
+    background: #004b93 !important;
+}
+
+/* Jarak aman dari navbar */
+.faq-page {
+    padding-top: 3rem;
+}
+
+/* Judul putih kontras */
+.faq-page h3,
+.faq-section h3 {
+    color: #ffffff;
+}
+
+/* FAQ card tetap putih */
+.faq-section .accordion-item {
+    background-color: #ffffff;
+}
+
+/* Supaya batas ke footer rapi */
+.faq-section {
+    padding-bottom: 4rem;
+}
+</style>
