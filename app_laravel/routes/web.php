@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KegiatanController;
+use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\FAQController;
@@ -28,6 +29,15 @@ Route::get('/profil', [ProfilController::class, 'index'])->name('profil.index');
 Route::get('/profil/{ormawa_id}', [ProfilController::class, 'show'])->name('profil.show');
 // Route::get('/profil/{ormawa_id}', [ProfilController::class, 'show'])->name('profil.show');
 
+// Kegiatan & Galeri - bebas akses
+Route::resource('kegiatan', KegiatanController::class)->only(['index', 'show']);
+Route::resource('galeri', GaleriController::class)->only(['index', 'show']);
+
+// ----------------------------------------------------
+// 🔥 PUBLIC ASPIRASI & FAQ (Hanya Menggunakan FAQController)
+// ----------------------------------------------------
+Route::get('/faq', [FAQController::class, 'index'])->name('faq.index');
+Route::get('/faq/{faq}', [FAQController::class, 'show'])->name('faq.show');
 
 //route sementara untuk memeriksa koneksi
 use Illuminate\Support\Facades\DB;
@@ -51,10 +61,13 @@ Route::get('/kegiatan/{kegiatan}', [KegiatanController::class, 'show'])->name('k
 Route::get('/pertanyaan', [FAQController::class, 'index'])->name('pertanyaan.index');
 Route::post('/pertanyaan', [FAQController::class, 'store'])->name('aspirasi.store');
 
-Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri.index');
-Route::get('/galeri/{galeri}', [GaleriController::class, 'show'])->name('galeri.show');
+// Kirim aspirasi dari user umum (menggunakan store di FAQController)
+Route::post('/aspirasi/kirim', [FAQController::class, 'store'])->name('aspirasi.store'); 
 
-// Halaman CRUD (butuh login manual session)
+
+// ----------------------------------------------------
+// CRUD HANYA UNTUK ADMIN/ORMAWA YANG LOGIN
+// ----------------------------------------------------
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

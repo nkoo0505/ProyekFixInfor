@@ -9,58 +9,53 @@ use App\Models\Pendapat;
 class FAQController extends Controller
 {
     /**
-     * Halaman publik: tampilkan FAQ dan pertanyaan yang sudah dijawab,
-     * sekaligus form untuk kirim pertanyaan/aspirasi baru.
+     * Menampilkan halaman FAQ (statis) dan
+     * daftar pertanyaan/pendapat user yang sudah dijawab.
      */
-    public function index(Request $request)
+    public function index(Request $request) // 👈 Tambahkan Request $request
     {
-        $search = $request->query('search');
+        // 1. Ambil FAQ Statis
+        $staticFaqs = FAQ::orderBy('waktu_input', 'desc')->get();
 
-        $faqsQuery = FAQ::orderBy('waktu_input', 'desc');
-        if ($search) {
-            $faqsQuery->where('pertanyaan_faq', 'like', "%{$search}%");
-        }
-        $faqs = $faqsQuery->get();
+        // 2. Logika Pencarian untuk Pendapat
+        $query = Pendapat::whereHas('balasan')->with('balasan');
 
-        $pendapatQuery = Pendapat::with(['balasan' => function ($q) {
-                $q->orderBy('waktu_kirim', 'asc');
-            }])
-            ->whereHas('balasan');
-
-        if ($search) {
-            $pendapatQuery->where(function ($q) use ($search) {
-                $q->where('pesan', 'like', "%{$search}%")
-                  ->orWhereHas('balasan', function ($b) use ($search) {
-                      $b->where('isi_balasan', 'like', "%{$search}%");
-                  });
+        // Jika ada input pencarian dari user
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('pesan', 'like', "%{$search}%") // Cari di isi pesan
+                    ->orWhere('nama', 'like', "%{$search}%") // Atau cari di nama pengirim
+                    ->orWhereHas('balasan', function ($subQ) use ($search) {
+                        $subQ->where('isi_balasan', 'like', "%{$search}%"); // Atau cari di jawaban admin
+                    });
             });
         }
 
-        $pendapats = $pendapatQuery
-            ->orderBy('waktu_kirim', 'desc')
-            ->get();
+        $pendapats = $query->orderBy('waktu_kirim', 'desc')->get();
 
-        return view('pertanyaan.index', compact('faqs', 'pendapats', 'search'));
+        return view('pertanyaan.index', compact('staticFaqs', 'pendapats'));
     }
-
     /**
-     * Simpan pertanyaan/aspirasi baru dari pengunjung publik.
+     * Simpan pertanyaan/pendapat baru dari user (publik).
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nama'  => ['nullable', 'string', 'max:100'],
-            'pesan' => ['required', 'string'],
+        $request->validate([
+            'nama' => 'nullable|string|max:100',
+            'isi' => 'required|string|max:1000', // Sesuaikan max length jika perlu
         ]);
 
-        Pendapat::create([
-            'nama'        => $validated['nama'] ?? null,
-            'pesan'       => $validated['pesan'],
+         Pendapat::create([
+            'nama' => $request->nama ?: 'Anonim',
+            'pesan' => $request->isi, 
             'waktu_kirim' => now(),
-            'STATUS'      => 'BELUM DIBACA',
+            'status' => 'pending', 
         ]);
 
-        return redirect()->route('pertanyaan.index')
-            ->with('success', 'Terima kasih, pertanyaan/aspirasi Anda berhasil dikirim.');
+        return redirect()->route('faq.index')->with('success', 'Pertanyaan/Pendapat Anda berhasil dikirim! Jawaban akan tampil setelah dibalas oleh Admin.');
     }
+
+    // Fungsi jawab() DIHAPUS dari sini karena ini Controller publik.
+    // Fungsi menjawab akan pindah ke PertanyaanController (Admin).
 }
